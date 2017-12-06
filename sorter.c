@@ -10,10 +10,10 @@
 #include <sys/wait.h>
 #include "sorter.h"
 pthread_t ** threads;
-int numofthreads=50;
+int numofthreads=2000;
 int countthreads=0;
 struct list ** linkedlists;
-int numoflists=50;
+int numoflists=2000;
 int countlists=0;
 int numoftotalthreads=0;
 pthread_mutex_t m;
@@ -1026,7 +1026,6 @@ pthread_mutex_lock(&m);
 pthread_mutex_unlock(&m);
 //Critical section Ends!!!!
     pthread_exit(NULL);
-    return (void*)result;
 }
 
 
@@ -1113,7 +1112,6 @@ void * dirthread(void * in){
 }
 
 pthread_exit(NULL);
-return NULL;
 }
 
 
@@ -1139,129 +1137,40 @@ int main(int argc, char** argv) {
      printf("Initial PID:%d\n", getpid());
      printf("TIDS of all child threads:" );
   
-     threads=malloc((sizeof(pthread_t *) * (50)));
+     threads=malloc((sizeof(pthread_t *) * (2000)));
 //***********************************************************MAIN***************************************************************************
-    linkedlists=malloc((sizeof(struct list *) * (50)));
+    linkedlists=malloc((sizeof(struct list *) * (2000)));
 //*****************************************Command Line Checking*****************************************
     char *inputpath;
     char *outputpath;
     char *column;
-    if(argc<=2||argc==4||argc==6||argc>7){
+  if(argc!=7&&argc!=9&&argc!=11){
         printf("Incorrect Input\n" );
         return 0;
     }
-
-
-//Command Line Argument->> ./sorter -c criteria
-    if(argc==3){
-        if(strcmp(argv[1],"-c")!=0){
-             printf("Input Error\n" );
-             return 0;
-        }
-        else{
-          column=argv[2];
-          inputpath=".";
-          outputpath=".";
-        }
+   if(argc==7){
+    inputpath=".";
+    outputpath=".";
+    column=argv[2];
     }
-//Command Line Argument->> ./sorter -? some -? some
- 
-    if(argc==5){
-        if(strcmp(argv[1],"-c")!=0&&strcmp(argv[3],"-c")!=0){
-             printf("Input Error\n" );
-             return 0;
-        }
-        if(strcmp(argv[1],"-c")==0&&strcmp(argv[3],"-d")!=0&&strcmp(argv[3],"-o")!=0){
-             printf("Input Error\n" );
-             return 0;
-        }
-        if(strcmp(argv[3],"-c")==0&&strcmp(argv[1],"-d")!=0&&strcmp(argv[1],"-o")!=0){
-             printf("Input Error\n" );
-             return 0;
-        }
-        else{
-            if(strcmp(argv[1],"-c")==0){
-             column=argv[2];
-             }
-            else if(strcmp(argv[3],"-c")==0){
-             column=argv[4];
-            }
-            if(strcmp(argv[1],"-d")==0){
-             inputpath=argv[2];
-             outputpath=".";
-            }
-            if(strcmp(argv[3],"-d")==0){
-             inputpath=argv[4];
-             outputpath=".";
-            }
-            if(strcmp(argv[1],"-o")==0){
-             outputpath=argv[2];
-             inputpath=".";
-            }
-            if(strcmp(argv[3],"-o")==0){
-             outputpath=argv[4];
-             inputpath=".";
-            }
-        }
+   if(argc==9){
+    if(strcmp(argv[7],"-d")==0){
+      inputpath=argv[8];
+      outputpath=".";}
+    if(strcmp(argv[7],"-o")==0){
+      outputpath=argv[8];
+      inputpath=".";}
+       column=argv[2];
+     }
+    if(argc==11){
+      if(strcmp(argv[7],"-d")==0){
+      inputpath=argv[8];
+      outputpath=argv[10];}
+      if(strcmp(argv[7],"-o")==0){
+      outputpath=argv[8];
+      inputpath=argv[10];}
+       column=argv[2];
     }
-//Command Line Argument->> ./sorter -? some -? some -? some
-if(argc==7){
-    if(strcmp(argv[1],"-c")!=0&&strcmp(argv[3],"-c")!=0&&strcmp(argv[5],"-c")!=0){
-             printf("Input Error\n" );
-             return 0;
-        }
-    if(strcmp(argv[1],"-c")==0){
-        if(!(   (strcmp(argv[3],"-d")==0&&strcmp(argv[5],"-o")==0) || (strcmp(argv[3],"-o")==0&&strcmp(argv[5],"-d")==0)                   )){
-            printf("Input Error\n" );
-             return 0;
-        }
-        if(strcmp(argv[3],"-d")==0){
-            inputpath=argv[4];
-            outputpath=argv[6];
-            column=argv[2];
-        }
-        if(strcmp(argv[5],"-d")==0){
-            inputpath=argv[6];
-            outputpath=argv[4];
-            column=argv[2];
-        }
-    }
-    if(strcmp(argv[3],"-c")==0){
-        if(!(   (strcmp(argv[1],"-d")==0&&strcmp(argv[5],"-o")==0) || (strcmp(argv[1],"-o")==0&&strcmp(argv[5],"-d")==0)                   )){
-            printf("Input Error\n" );
-             return 0;
-        }
-        if(strcmp(argv[1],"-d")==0){
-            inputpath=argv[2];
-            outputpath=argv[6];
-            column=argv[4];
-        }
-        if(strcmp(argv[5],"-d")==0){
-            inputpath=argv[6];
-            outputpath=argv[2];
-            column=argv[4];
-        }
-    }
-    if(strcmp(argv[5],"-c")==0){
-        if(!(   (strcmp(argv[1],"-d")==0&&strcmp(argv[3],"-o")==0) || (strcmp(argv[1],"-o")==0&&strcmp(argv[3],"-d")==0)                   )){
-            printf("Input Error\n" );
-             return 0;
-        }
-         if(strcmp(argv[1],"-d")==0){
-            inputpath=argv[2];
-            outputpath=argv[4];
-            column=argv[6];
-        }
-        if(strcmp(argv[3],"-d")==0){
-            inputpath=argv[4];
-            outputpath=argv[2];
-            column=argv[6];
-        }
-    }
-
-
-}
-
 //*****************************************Command Line Checking Complete{FINNALLY!!!}*****************************************
 //calculate sorting criteria
 int com;
@@ -1387,7 +1296,7 @@ int com;
      outputpath=repath(outputpath,"AllFiles-sorted-<");
      outputpath=repath(outputpath,column);
      outputpath=repath(outputpath,">.csv");
-     print(linkedlists[0]->start,outputpath);
+     print(linkedlists[0]->start,"./out.csv");
 //close
      free(threads);
      freelist(linkedlists[0]->start);
