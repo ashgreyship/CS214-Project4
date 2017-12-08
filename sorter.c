@@ -1234,8 +1234,6 @@ int main(int argc, char **argv) {
 
             }
 
-
-
 //list directories
             struct stat st;
 
@@ -1322,4 +1320,7 @@ int main(int argc, char **argv) {
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
     return 0;
 }
+
+
+
 
