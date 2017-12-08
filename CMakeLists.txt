@@ -7,6 +7,8 @@ set(SOURCE_FILES
         sorter.c
         sorter.h
         README.md
+        client.c
+
         )
 
 add_executable(Project_4 ${SOURCE_FILES})

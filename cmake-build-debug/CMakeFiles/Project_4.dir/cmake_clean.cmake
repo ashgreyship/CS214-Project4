@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Project_4.dir/sorter.c.o"
+  "CMakeFiles/Project_4.dir/client.c.o"
   "Project_4.pdb"
   "Project_4"
 )

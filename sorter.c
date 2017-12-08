@@ -885,9 +885,11 @@ void freelist(struct film *root) {
 }
 
 void *addFile(void *in) {
+
     pthread_mutex_lock(&p);
     printf("%lu,", pthread_self());
     pthread_mutex_unlock(&p);
+
     struct film *movie = (struct film *) malloc(sizeof(struct film));
     struct film *temp;
     temp = movie;
@@ -1047,6 +1049,9 @@ void *addFile(void *in) {
 //Critical section Ends!!!!
     pthread_exit(NULL);
 }
+
+
+
 
 
 void *dirthread(void *in) {
@@ -1320,6 +1325,9 @@ int main(int argc, char **argv) {
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
     return 0;
 }
+
+
+
 
 
 
