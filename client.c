@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "sorter.h"
+#include "client.h"
 pthread_t ** threads;
 int numofthreads=2000;
 int countthreads=0;
