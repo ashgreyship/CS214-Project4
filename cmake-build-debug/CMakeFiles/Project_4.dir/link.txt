@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/Project_4.dir/sorter.c.o CMakeFiles/Project_4.dir/client.c.o  -o Project_4 
+/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/Project_4.dir/sorter.c.o CMakeFiles/Project_4.dir/client.c.o CMakeFiles/Project_4.dir/createlinkedlist.c.o CMakeFiles/Project_4.dir/server.c.o  -o Project_4 

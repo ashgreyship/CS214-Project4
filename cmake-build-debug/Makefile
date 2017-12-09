@@ -150,6 +150,60 @@ client.c.s:
 	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/client.c.s
 .PHONY : client.c.s
 
+createlinkedlist.o: createlinkedlist.c.o
+
+.PHONY : createlinkedlist.o
+
+# target to build an object file
+createlinkedlist.c.o:
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/createlinkedlist.c.o
+.PHONY : createlinkedlist.c.o
+
+createlinkedlist.i: createlinkedlist.c.i
+
+.PHONY : createlinkedlist.i
+
+# target to preprocess a source file
+createlinkedlist.c.i:
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/createlinkedlist.c.i
+.PHONY : createlinkedlist.c.i
+
+createlinkedlist.s: createlinkedlist.c.s
+
+.PHONY : createlinkedlist.s
+
+# target to generate assembly for a file
+createlinkedlist.c.s:
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/createlinkedlist.c.s
+.PHONY : createlinkedlist.c.s
+
+server.o: server.c.o
+
+.PHONY : server.o
+
+# target to build an object file
+server.c.o:
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/server.c.o
+.PHONY : server.c.o
+
+server.i: server.c.i
+
+.PHONY : server.i
+
+# target to preprocess a source file
+server.c.i:
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/server.c.i
+.PHONY : server.c.i
+
+server.s: server.c.s
+
+.PHONY : server.s
+
+# target to generate assembly for a file
+server.c.s:
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/server.c.s
+.PHONY : server.c.s
+
 sorter.o: sorter.c.o
 
 .PHONY : sorter.o
@@ -189,6 +243,12 @@ help:
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"
+	@echo "... createlinkedlist.o"
+	@echo "... createlinkedlist.i"
+	@echo "... createlinkedlist.s"
+	@echo "... server.o"
+	@echo "... server.i"
+	@echo "... server.s"
 	@echo "... sorter.o"
 	@echo "... sorter.i"
 	@echo "... sorter.s"

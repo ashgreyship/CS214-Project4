@@ -105,19 +105,71 @@ CMakeFiles/Project_4.dir/client.c.o.provides: CMakeFiles/Project_4.dir/client.c.
 CMakeFiles/Project_4.dir/client.c.o.provides.build: CMakeFiles/Project_4.dir/client.c.o
 
 
+CMakeFiles/Project_4.dir/createlinkedlist.c.o: CMakeFiles/Project_4.dir/flags.make
+CMakeFiles/Project_4.dir/createlinkedlist.c.o: ../createlinkedlist.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Project_4.dir/createlinkedlist.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Project_4.dir/createlinkedlist.c.o   -c "/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/createlinkedlist.c"
+
+CMakeFiles/Project_4.dir/createlinkedlist.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Project_4.dir/createlinkedlist.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/createlinkedlist.c" > CMakeFiles/Project_4.dir/createlinkedlist.c.i
+
+CMakeFiles/Project_4.dir/createlinkedlist.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Project_4.dir/createlinkedlist.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/createlinkedlist.c" -o CMakeFiles/Project_4.dir/createlinkedlist.c.s
+
+CMakeFiles/Project_4.dir/createlinkedlist.c.o.requires:
+
+.PHONY : CMakeFiles/Project_4.dir/createlinkedlist.c.o.requires
+
+CMakeFiles/Project_4.dir/createlinkedlist.c.o.provides: CMakeFiles/Project_4.dir/createlinkedlist.c.o.requires
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/createlinkedlist.c.o.provides.build
+.PHONY : CMakeFiles/Project_4.dir/createlinkedlist.c.o.provides
+
+CMakeFiles/Project_4.dir/createlinkedlist.c.o.provides.build: CMakeFiles/Project_4.dir/createlinkedlist.c.o
+
+
+CMakeFiles/Project_4.dir/server.c.o: CMakeFiles/Project_4.dir/flags.make
+CMakeFiles/Project_4.dir/server.c.o: ../server.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Project_4.dir/server.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Project_4.dir/server.c.o   -c "/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/server.c"
+
+CMakeFiles/Project_4.dir/server.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Project_4.dir/server.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/server.c" > CMakeFiles/Project_4.dir/server.c.i
+
+CMakeFiles/Project_4.dir/server.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Project_4.dir/server.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/server.c" -o CMakeFiles/Project_4.dir/server.c.s
+
+CMakeFiles/Project_4.dir/server.c.o.requires:
+
+.PHONY : CMakeFiles/Project_4.dir/server.c.o.requires
+
+CMakeFiles/Project_4.dir/server.c.o.provides: CMakeFiles/Project_4.dir/server.c.o.requires
+	$(MAKE) -f CMakeFiles/Project_4.dir/build.make CMakeFiles/Project_4.dir/server.c.o.provides.build
+.PHONY : CMakeFiles/Project_4.dir/server.c.o.provides
+
+CMakeFiles/Project_4.dir/server.c.o.provides.build: CMakeFiles/Project_4.dir/server.c.o
+
+
 # Object files for target Project_4
 Project_4_OBJECTS = \
 "CMakeFiles/Project_4.dir/sorter.c.o" \
-"CMakeFiles/Project_4.dir/client.c.o"
+"CMakeFiles/Project_4.dir/client.c.o" \
+"CMakeFiles/Project_4.dir/createlinkedlist.c.o" \
+"CMakeFiles/Project_4.dir/server.c.o"
 
 # External object files for target Project_4
 Project_4_EXTERNAL_OBJECTS =
 
 Project_4: CMakeFiles/Project_4.dir/sorter.c.o
 Project_4: CMakeFiles/Project_4.dir/client.c.o
+Project_4: CMakeFiles/Project_4.dir/createlinkedlist.c.o
+Project_4: CMakeFiles/Project_4.dir/server.c.o
 Project_4: CMakeFiles/Project_4.dir/build.make
 Project_4: CMakeFiles/Project_4.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable Project_4"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Project_4"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Project_4.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -127,6 +179,8 @@ CMakeFiles/Project_4.dir/build: Project_4
 
 CMakeFiles/Project_4.dir/requires: CMakeFiles/Project_4.dir/sorter.c.o.requires
 CMakeFiles/Project_4.dir/requires: CMakeFiles/Project_4.dir/client.c.o.requires
+CMakeFiles/Project_4.dir/requires: CMakeFiles/Project_4.dir/createlinkedlist.c.o.requires
+CMakeFiles/Project_4.dir/requires: CMakeFiles/Project_4.dir/server.c.o.requires
 
 .PHONY : CMakeFiles/Project_4.dir/requires
 
