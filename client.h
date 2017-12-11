@@ -64,6 +64,8 @@ void mergestring(struct film**);
 void print(struct film*,char * );
 int checkFile(FILE*);
 int sortFile(FILE*, int,char*,char*, char* );
+void *mergeFiles(void *in);
+void * addFile(void*);
 int main(int, char*[]);
 
 
