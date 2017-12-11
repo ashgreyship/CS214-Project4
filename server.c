@@ -46,7 +46,7 @@ int main(int argc , char *argv[])
         return 1;
     }
     //Allocate threads arrat
-    threads=malloc((sizeof(struct list *) * (2000)));
+    threads=malloc((sizeof(pthread_t) * (2000)));
     //check commandline input
     if(argc!=3){
         printf("incorrect input" );
@@ -106,7 +106,7 @@ int main(int argc , char *argv[])
         }  
         
     }
-
+//joint threads
     int s=0;
     while(threads[s]){
       if(threads[s]){
