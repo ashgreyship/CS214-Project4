@@ -1272,12 +1272,7 @@ int main(int argc, char **argv) {
                 }
                 pthread_mutex_unlock(&key);
 //Critical Section Ends
-
-
-
             }
-
-
         }
 
 

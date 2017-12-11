@@ -27,10 +27,12 @@ int numoftotalthreads = 0;
 int sockfd;
 int SERVER_PORT;
 //char *content = "duration~color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes^Color,James Cameron,723,178,0,855,Joel David Moore,1000,760505847,Action|Adventure|Fantasy|Sci-Fi,CCH Pounder,Avatar ,886204,4834,Wes Studi,0,avatar|future|marine|native|paraplegic,http://www.imdb.com/title/tt0499549/?ref_=fn_tt_tt_1,3054,English,USA,PG-13,237000000,2009,936,7.9,1.78,33000^Color,Gore Verbinski,302,169,563,1000,Orlando Bloom,40000,309404152,Action|Adventure|Fantasy,Johnny Depp,Pirates of the Caribbean: At World's End ,471220,48350,Jack Davenport,0,goddess|marriage ceremony|marriage proposal|pirate|singapore,http://www.imdb.com/title/tt0449088/?ref_=fn_tt_tt_1,1238,English,USA,PG-13,300000000,2007,5000,7.1,2.35,0^Color,Sam Mendes,602,148,0,161,Rory Kinnear,11000,200074175,Action|Adventure|Thriller,Christoph Waltz,Spectre ,275868,11700,Stephanie Sigman,1,bomb|espionage|sequel|spy|terrorist,http://www.imdb.com/title/tt2379713/?ref_=fn_tt_tt_1,994,English,UK,PG-13,245000000,2015,393,6.8,2.35,85000^Color,Christopher Nolan,813,164,22000,23000,Christian Bale,27000,448130642,Action|Thriller,Tom Hardy,The Dark Knight Rises ,1144337,106759,Joseph Gordon-Levitt,0,deception|imprisonment|lawlessness|police officer|terrorist plot,http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1,2701,English,USA,PG-13,250000000,2012,23000,8.5,2.35,164000^,Doug Walker,,,131,,Rob Walker,131,,Documentary,Doug Walker,Star Wars: Episode VII - The Force Awakens             ,8,143,,0,,http://www.imdb.com/title/tt5289954/?ref_=fn_tt_tt_1,,,,,,,12,7.1,,0^Color,Andrew Stanton,462,132,475,530,Samantha Morton,640,73058679,Action|Adventure|Sci-Fi,Daryl Sabara,John Carter ,212204,1873,Polly Walker,1,alien|american civil war|male nipple|mars|princess,http://www.imdb.com/title/tt0401729/?ref_=fn_tt_tt_1,738,English,USA,PG-13,263700000,2012,632,6.6,2.35,24000@1234567<";
-char *content="abcdefg";
+char *content = "abcdefg";
+char *sortedAll = "mergeAllFiles";
 pthread_mutex_t m;
 pthread_mutex_t p;
 pthread_mutex_t key;
+pthread_t *TIDofFinal;
 
 
 char *repath(const char *s1, const char *s2) {
@@ -904,12 +906,34 @@ void *addFile(void *in) {
     char *portnum = input->portnum;
     printf("starting add file, port num is %s\n", portnum);
 
-    char *fileString = input->p;
+    //char *fileString = input->p;
+    char fileString[100];
+    strcpy(fileString,input->p);
     if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
     }
+    memset(fileString,0,sizeof(fileString));
 
+    pthread_exit(NULL);
+}
+
+
+void *mergeFiles(void *in) {
+    pthread_mutex_lock(&p);
+    printf("%lu,", pthread_self());
+    pthread_mutex_unlock(&p);
+    struct input *input = in;
+    printf("starting merge all sorted Files");
+
+    //char *fileString = input->p;
+    char fileString[100];
+    strcpy(fileString,input->p);
+    if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
+        perror("fail to send datas.");
+        exit(-1);
+    }
+    memset(fileString,0,sizeof(fileString));
     pthread_exit(NULL);
 }
 
@@ -1180,74 +1204,27 @@ int main(int argc, char **argv) {
             s++;
         }
         s++;
-        // s = 0;
 
 //**********************Send signal of merging all sorted files****************************************
-//        pthread_mutex_lock(&key);
-//        struct input *in = malloc(sizeof(struct input));
-//        char *sortedAll="mergeAllFiles";
-//        in->p = sortedAll;
-//        threads[countthreads] = malloc(sizeof(pthread_t));
-//        pthread_create(threads[countthreads], NULL, mergeFiles, (void *) in);
-//        numoftotalthreads++;
-//        countthreads++;
-//        if (numofthreads == countthreads) {
-//            numofthreads = numofthreads * 2;
-//            threads = realloc(threads, sizeof(pthread_t *) * numofthreads);
-//        }
-//        pthread_mutex_unlock(&key);
-//        if(threads[s]){
-//            pthread_join(*threads[s],NULL);
-//        }
+        struct input *inputFinal = malloc(sizeof(struct input));
 
+        inputFinal->p = sortedAll;
+        pthread_mutex_lock(&key);
+        threads[countthreads] = malloc(sizeof(pthread_t));
+        pthread_create(threads[countthreads], NULL, mergeFiles, (void *) inputFinal);
+        numoftotalthreads++;
+        pthread_mutex_unlock(&key);
 
-
-//Integrate all data structures
-//        while (linkedlists[s]) {
-//            if (linkedlists[s + 1]) {
-//                linkedlists[s]->end->next = linkedlists[s + 1]->start;
-//            }
-//            s++;
-//        }
-
-//Final Sort
-//        if (com == 3 || com == 4 || com == 5 || com == 6 || com == 8 || com == 9 || com == 13 || com == 14 ||
-//            com == 16 || com == 19 || com == 23 || com == 24 || com == 25 || com == 28) {
-//            mergeint(&linkedlists[0]->start);
-//        }
-//        if (com == 26 || com == 27) {
-//            mergedouble(&linkedlists[0]->start);
-//        } else {
-//            mergestring(&linkedlists[0]->start);
-//        }
-
-//        outputpath = repath(outputpath, "/");
-//        outputpath = repath(outputpath, "AllFiles-sorted-<");
-//        outputpath = repath(outputpath, column);
-//        outputpath = repath(outputpath, ">.csv");
-//        print(linkedlists[0]->start, "./out.csv");
-//close
+      //  free(in);
+        if (threads[s])
+            pthread_join(*threads[s], NULL);
         close(sockfd);
         free(threads);
-        // freelist(linkedlists[0]->start);
         closedir(d);
     }
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
-    printf("%s\n",outputpath );
+    printf("%s\n", outputpath);
     return 0;
 }
 
 
-void *mergeFiles(void *in) {
-    pthread_mutex_lock(&p);
-    printf("%lu,", pthread_self());
-    pthread_mutex_unlock(&p);
-    struct input *input = in;
-    printf("starting merge all sorted Files");
-    char *fileString = input->p;
-    if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
-        perror("fail to send datas.");
-        exit(-1);
-    }
-    pthread_exit(NULL);
-}
