@@ -901,8 +901,8 @@ void *addFile(void *in) {
     printf("%lu,", pthread_self());
     pthread_mutex_unlock(&p);
     struct input *input = in;
-    char *portnum = input->portnum;
-    printf("starting add file, port num is %s\n", portnum);
+  //  char *portnum = input->portnum;
+    printf("starting add file");
     char *fileString = input->p;
     if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
         perror("fail to send datas.");
@@ -924,7 +924,7 @@ void *dirthread(void *in) {
     char *inputpath = input->p;
     d = opendir(inputpath);
     int com = input->com;
-    char *portNum = input->portnum;
+   // char *portNum = input->portnum;
 //Check all items
     if (d) {
         while ((dir = readdir(d)) != NULL) {
@@ -940,7 +940,7 @@ void *dirthread(void *in) {
                 //in->p = fp;
                 in->p = content;
                 in->com = com;
-                in->portnum = portNum;
+                //in->portnum = portNum;
 //Critical Section
                 pthread_mutex_lock(&key);
                 threads[countthreads] = malloc(sizeof(pthread_t));
@@ -976,7 +976,7 @@ void *dirthread(void *in) {
                 struct input *in = malloc(sizeof(struct input));
                 in->p = newinputpath;
                 in->com = com;
-                in->portnum = portNum;
+              //  in->portnum = portNum;
 //Critical Section
                 pthread_mutex_lock(&key);
                 threads[countthreads] = malloc(sizeof(pthread_t));
@@ -1072,9 +1072,6 @@ int main(int argc, char **argv) {
 
 //***************************************** Initialize socket**********
     SERVER_PORT = atoi(portnum);
-
-    char sendBuf[MAX_BUF];
-    int sendSize;
     struct hostent *host;
     host = gethostbyname(argv[4]);
     struct sockaddr_in servAddr;
