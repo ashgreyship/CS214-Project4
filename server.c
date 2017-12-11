@@ -5,7 +5,7 @@
 #include <arpa/inet.h> 
 #include <unistd.h>   
 #include <pthread.h> 
-pthread_t ** threads;
+pthread_t * threads;
 int numofthreads=2000;
 int countthreads=0;
 pthread_mutex_t key;
@@ -30,10 +30,12 @@ void *serverfunc(void *socketfd)
         fflush(stdout);
     }
 
+ 
    //Critical Section(Add linked list)
    pthread_mutex_lock(&key);
    pthread_mutex_unlock(&key);
    //Critical Section Ends
+   //close(socketfd);
     return 0;
 } 
  
@@ -46,7 +48,7 @@ int main(int argc , char *argv[])
         return 1;
     }
     //Allocate threads arrat
-    threads=malloc((sizeof(pthread_t) * (2000)));
+    threads=malloc((sizeof(pthread_t ) * (2000)));
     //check commandline input
     if(argc!=3){
         printf("incorrect input" );
@@ -70,6 +72,7 @@ int main(int argc , char *argv[])
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons( portnum );
+     
     //Bind
     if( bind(socketfd,(struct sockaddr *)&server , sizeof(server)) == -1)
     {
@@ -83,34 +86,31 @@ int main(int argc , char *argv[])
         perror("error listening");
         return 0;
     }
-
     //Accept 
     c = sizeof(struct sockaddr_in);
-    pthread_t thread_id;
+    pthread_t thread_id=threads[countthreads];
     while( (clientfd = accept(socketfd, (struct sockaddr *)&client, (socklen_t*)&c)) )
     {
-
-       thread_id=*threads[countthreads];
-       countthreads++;
-       //Check if Threads Array needs resizeing
-       if(numofthreads==countthreads){
-        numofthreads=numofthreads*2;
-        threads = realloc(threads, sizeof(pthread_t*)*numofthreads);
-        }
-
-
+  
+        
         if( pthread_create( &thread_id , NULL ,  serverfunc , (void*) &clientfd) < 0)
         {
             perror("error creating thread");
             return 0;
         }  
+        countthreads++;
+        //Check if Threads Array needs resizeing
+            if(numofthreads==countthreads){
+                numofthreads=numofthreads*2;
+                threads = realloc(threads, sizeof(pthread_t*)*numofthreads);
+            }
         
     }
 //joint threads
     int s=0;
     while(threads[s]){
       if(threads[s]){
-      pthread_join(*threads[s],NULL);}
+      pthread_join(threads[s],NULL);}
       s++;
     }
     if (clientfd ==-1)
