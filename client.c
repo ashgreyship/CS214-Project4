@@ -1209,15 +1209,11 @@ int main(int argc, char **argv) {
         struct input *inputFinal = malloc(sizeof(struct input));
 
         inputFinal->p = sortedAll;
-        pthread_mutex_lock(&key);
-        threads[countthreads] = malloc(sizeof(pthread_t));
-        pthread_create(threads[countthreads], NULL, mergeFiles, (void *) inputFinal);
-        numoftotalthreads++;
-        pthread_mutex_unlock(&key);
+        pthread_t lastthread;
+        pthread_create(&lastthread, NULL, mergeFiles, (void *) inputFinal);
+        pthread_join(lastthread,NULL);
 
       //  free(in);
-        if (threads[s])
-            pthread_join(*threads[s], NULL);
         close(sockfd);
         free(threads);
         closedir(d);
