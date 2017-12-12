@@ -1214,8 +1214,6 @@ int main(int argc, char **argv) {
         pthread_join(lastthread,NULL);
 
       //  free(in);
-        if (threads[s])
-            pthread_join(*threads[s], NULL);
         close(sockfd);
         free(threads);
         closedir(d);
