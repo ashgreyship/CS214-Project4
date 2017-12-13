@@ -464,6 +464,7 @@ void print2(struct film *list) {
                 printf("%d,", movie->duration);
             }
 
+<<<<<<< HEAD
 
             if (movie->director_facebook_likes == -1) {
                 printf(",");
@@ -564,6 +565,108 @@ void print2(struct film *list) {
                 printf("%s,", movie->language);
             }
 
+=======
+
+            if (movie->director_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->director_facebook_likes);
+            }
+
+
+            if (movie->actor_3_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->actor_3_facebook_likes);
+            }
+
+            if (movie->actor_2_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->actor_2_name);
+            }
+
+
+            if (movie->actor_1_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->actor_1_facebook_likes);
+            }
+
+            if (movie->gross == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->gross);
+            }
+            if (movie->generes == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->generes);
+            }
+
+            if (movie->actor_1_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->actor_1_name);
+            }
+
+            if (movie->movie_title == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->movie_title);
+            }
+
+
+            if (movie->num_voted_users == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->num_voted_users);
+            }
+
+
+            if (movie->cast_total_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->cast_total_facebook_likes);
+            }
+
+            if (movie->actor_3_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->actor_3_name);
+            }
+
+            if (movie->facenumber_in_poster == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->facenumber_in_poster);
+            }
+
+            if (movie->plot_keywords == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->plot_keywords);
+            }
+
+            if (movie->movie_imdb_link == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->movie_imdb_link);
+            }
+
+
+            if (movie->num_user_for_reviews == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->num_user_for_reviews);
+            }
+            if (movie->language == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->language);
+            }
+
+>>>>>>> 5349e1f4c88c9219a4b2b011dc802fd9dfe14362
             if (movie->country == NULL) {
                 printf(",");
             } else {
