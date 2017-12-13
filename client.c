@@ -15,6 +15,10 @@
 #include <netdb.h>
 #include <errno.h>
 
+#define _GNU_SOURCE
+#include <ifaddrs.h>
+//#include <linux/if_link.h>
+
 #define MAX_BUF 4096
 
 pthread_t **threads;
@@ -908,12 +912,12 @@ void *addFile(void *in) {
 
     //char *fileString = input->p;
     char fileString[100];
-    strcpy(fileString,input->p);
+    strcpy(fileString, input->p);
     if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
     }
-    memset(fileString,0,sizeof(fileString));
+    memset(fileString, 0, sizeof(fileString));
 
     pthread_exit(NULL);
 }
@@ -928,12 +932,12 @@ void *mergeFiles(void *in) {
 
     //char *fileString = input->p;
     char fileString[100];
-    strcpy(fileString,input->p);
+    strcpy(fileString, input->p);
     if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
     }
-    memset(fileString,0,sizeof(fileString));
+    memset(fileString, 0, sizeof(fileString));
     pthread_exit(NULL);
 }
 
@@ -1119,6 +1123,7 @@ int main(int argc, char **argv) {
     }
     printf("Success to connect the socket...\n");
 
+    //getIP();
 //*****************************************Start Traversing Directory**********************************************************
 
 
@@ -1211,9 +1216,9 @@ int main(int argc, char **argv) {
         inputFinal->p = sortedAll;
         pthread_t lastthread;
         pthread_create(&lastthread, NULL, mergeFiles, (void *) inputFinal);
-        pthread_join(lastthread,NULL);
+        pthread_join(lastthread, NULL);
 
-      //  free(in);
+        //  free(in);
         close(sockfd);
         free(threads);
         closedir(d);
@@ -1223,4 +1228,63 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-
+//
+//char *convertToString(char *col, FILE *fp, char *ip) {
+////
+//    printf("yes");
+//    char *ipLine = malloc(strlen(ip) + 2);
+//    strcpy(ipLine, ip);
+//    strcat(ipLine, "<");
+//
+//    char *colLine = malloc(strlen(ip) + 2);
+//    strcpy(colLine, col);
+//    strcat(colLine, "~");
+//
+//    char *fullStr = (char *) malloc(5000);
+//    fullStr[0] = '\0';
+//
+//    long allocationAmt = 500;
+//
+//    char *newStr = (char *) malloc(500);
+//    newStr[0] = '\0';
+//    while (fgets(newStr, 500, fp) != NULL) {
+//        if (strlen(fullStr) + strlen(newStr) > allocationAmt - 10) {
+//            allocationAmt = allocationAmt * 2;
+//            char *tempStr = malloc(allocationAmt * 2);
+//            strcpy (tempStr, fullStr);
+//            fullStr = malloc(allocationAmt);
+//            strcpy (fullStr, tempStr);
+//        }
+//
+//        strncat(fullStr, newStr, strlen(newStr) - 1);
+//        strcat(fullStr, "^");
+//    }
+//    strcat(fullStr, "@");
+//    char *returnStr = malloc(strlen(fullStr) + strlen(ipLine) + strlen(colLine) + 100);
+//    sprintf(returnStr, "%d", (int) (strlen(fullStr) + strlen(ipLine) + strlen(colLine) + 100));
+//    strcat(returnStr, ">");
+//    strcat(returnStr, colLine);
+//    strcat(returnStr, fullStr);
+//    strcat(returnStr, ipLine);
+//
+//    return returnStr;
+//}
+//
+//char *getIP() {
+//    struct ifaddrs *ifap, *ifa;
+//    struct sockaddr_in *sa;
+//    char *addr;
+//
+//    getifaddrs(&ifap);
+//    for (ifa = ifap; ifa; ifa = ifa->ifa_next) {
+//        if (ifa->ifa_addr->sa_family == AF_INET) {
+//            if (strcmp(ifa->ifa_name, "eth0") == 0) {
+//                sa = (struct sockaddr_in *) ifa->ifa_addr;
+//                addr = inet_ntoa(sa->sin_addr);
+//                printf("Interface: %s\tAddress: %s\n", ifa->ifa_name, addr);
+//            }
+//        }
+//    }
+//    freeifaddrs(ifap);
+//    return addr;
+//}

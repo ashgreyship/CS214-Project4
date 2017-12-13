@@ -67,6 +67,6 @@ int sortFile(FILE*, int,char*,char*, char* );
 void *mergeFiles(void *in);
 void * addFile(void*);
 int main(int, char*[]);
-
-
+char *getIP();
+char *convertToString(char *col, FILE *fp, char *ip);
 #endif
