@@ -17,9 +17,7 @@
 pthread_t * threads;
 int numofthreads=2000;
 int countthreads=0;
-struct list ** linkedlists;
-int numoflists=2000;
-int countlists=0;
+
 pthread_mutex_t key;
 
 char *repathfree(char *s1, char *s2) {
@@ -431,292 +429,243 @@ void mergestring(struct film** root)
 }
 
 //end of sorting functions
-void print2(struct film *list) {
+char* print2(struct film *list) {
     struct film *movie;
     movie = list;
-    printf("%s\n",
-           "color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes");
+    char * output=malloc(50000*sizeof(char));
+   
+
+
+    strcpy(output,"color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes");
+    
     while (movie) {
+        char * c=malloc(10*sizeof(char));
         if (movie->empty == 1) {
             if (movie->color == NULL) {
 
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->color);
+                 strcat(output,movie->color);
+                 strcat(output,",");
             }
 
             if (movie->director_name == NULL) {
-                printf(",");
+                 strcat(output,",");
             } else {
-                printf("%s,", movie->director_name);
+                 strcat(output,movie->director_name);
+                 strcat(output,",");
             }
 
             if (movie->num_critic_for_reviews == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->num_critic_for_reviews);
+               
+                sprintf(c,"%d",movie->num_critic_for_reviews);
+                strcat(output,c);
+                strcat(output,",");
             }
 
 
             if (movie->duration == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->duration);
+                sprintf(c,"%d",movie->duration);
+                strcat(output,c);
+                strcat(output,",");
             }
 
-<<<<<<< HEAD
 
             if (movie->director_facebook_likes == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->director_facebook_likes);
+                sprintf(c,"%d",movie->director_facebook_likes);
+                strcat(output,c);
+                strcat(output,",");
             }
 
 
             if (movie->actor_3_facebook_likes == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->actor_3_facebook_likes);
+                sprintf(c,"%d",movie->actor_3_facebook_likes);
+                strcat(output,c);
+                strcat(output,",");
             }
 
             if (movie->actor_2_name == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->actor_2_name);
+                strcat(output,movie->actor_2_name);
+                strcat(output,",");
             }
 
 
             if (movie->actor_1_facebook_likes == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->actor_1_facebook_likes);
+                sprintf(c,"%d",movie->actor_1_facebook_likes);
+                strcat(output,c);
+                strcat(output,",");
+
             }
 
             if (movie->gross == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->gross);
+                sprintf(c,"%d",movie->gross);
+                strcat(output,c);
+                strcat(output,",");
             }
             if (movie->generes == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->generes);
+                strcat(output,movie->generes);
+                strcat(output,",");
             }
 
             if (movie->actor_1_name == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->actor_1_name);
+                strcat(output,movie->actor_1_name);
+                strcat(output,",");
             }
 
             if (movie->movie_title == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->movie_title);
+                strcat(output,movie->movie_title);
+                strcat(output,",");
             }
 
 
             if (movie->num_voted_users == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->num_voted_users);
+                sprintf(c,"%d",movie->num_voted_users);
+                strcat(output,c);
+                strcat(output,",");
             }
 
 
             if (movie->cast_total_facebook_likes == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->cast_total_facebook_likes);
+                sprintf(c,"%d",movie->cast_total_facebook_likes);
+                strcat(output,c);
+                strcat(output,",");
             }
 
             if (movie->actor_3_name == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->actor_3_name);
+                strcat(output,movie->actor_3_name);
+                strcat(output,",");
             }
 
             if (movie->facenumber_in_poster == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->facenumber_in_poster);
+                sprintf(c,"%d",movie->facenumber_in_poster);
+                strcat(output,c);
+                strcat(output,",");
             }
 
             if (movie->plot_keywords == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->plot_keywords);
+                strcat(output,movie->plot_keywords);
+                strcat(output,",");
             }
 
             if (movie->movie_imdb_link == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->movie_imdb_link);
+                strcat(output,movie->movie_imdb_link);
+                strcat(output,",");
             }
 
 
             if (movie->num_user_for_reviews == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->num_user_for_reviews);
+                sprintf(c,"%d",movie->num_user_for_reviews);
+                strcat(output,c);
+                strcat(output,",");
             }
             if (movie->language == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->language);
+                strcat(output,movie->language);
+                strcat(output,",");
             }
 
-=======
-
-            if (movie->director_facebook_likes == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->director_facebook_likes);
-            }
-
-
-            if (movie->actor_3_facebook_likes == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->actor_3_facebook_likes);
-            }
-
-            if (movie->actor_2_name == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->actor_2_name);
-            }
-
-
-            if (movie->actor_1_facebook_likes == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->actor_1_facebook_likes);
-            }
-
-            if (movie->gross == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->gross);
-            }
-            if (movie->generes == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->generes);
-            }
-
-            if (movie->actor_1_name == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->actor_1_name);
-            }
-
-            if (movie->movie_title == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->movie_title);
-            }
-
-
-            if (movie->num_voted_users == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->num_voted_users);
-            }
-
-
-            if (movie->cast_total_facebook_likes == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->cast_total_facebook_likes);
-            }
-
-            if (movie->actor_3_name == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->actor_3_name);
-            }
-
-            if (movie->facenumber_in_poster == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->facenumber_in_poster);
-            }
-
-            if (movie->plot_keywords == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->plot_keywords);
-            }
-
-            if (movie->movie_imdb_link == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->movie_imdb_link);
-            }
-
-
-            if (movie->num_user_for_reviews == -1) {
-                printf(",");
-            } else {
-                printf("%d,", movie->num_user_for_reviews);
-            }
-            if (movie->language == NULL) {
-                printf(",");
-            } else {
-                printf("%s,", movie->language);
-            }
-
->>>>>>> 5349e1f4c88c9219a4b2b011dc802fd9dfe14362
             if (movie->country == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->country);
+                strcat(output,movie->country);
+                strcat(output,",");
             }
 
             if (movie->content_rating == NULL) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%s,", movie->content_rating);
+                strcat(output,movie->content_rating);
+                strcat(output,",");
             }
 
             if (movie->budget == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->budget);
+                sprintf(c,"%d",movie->budget);
+                strcat(output,c);
+                strcat(output,",");
             }
 
             if (movie->title_year == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->title_year);
+                sprintf(c,"%d",movie->title_year);
+                strcat(output,c);
+                strcat(output,",");
             }
 
             if (movie->actor_2_facebook_likes == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->actor_2_facebook_likes);
+                sprintf(c,"%d",movie->actor_2_facebook_likes);
+                strcat(output,c);
+                strcat(output,",");
             }
 
 
-            printf("%g,", movie->imdb_score);
+                sprintf(c,"%g",movie->imdb_score);
+                strcat(output,c);
+                strcat(output,",");
 
-            if (movie->aspect_ratio == -1) { printf(","); }
-            else { printf("%g,", movie->aspect_ratio); }
+            if (movie->aspect_ratio == -1) { strcat(output,",");}
+            else { sprintf(c,"%g",movie->aspect_ratio);
+                strcat(output,c);
+                strcat(output,","); }
 
             if (movie->movie_facebook_likes == -1) {
-                printf(",");
+                strcat(output,",");
             } else {
-                printf("%d,", movie->movie_facebook_likes);
+                sprintf(c,"%d",movie->movie_facebook_likes);
+                strcat(output,c);
+                strcat(output,",");
             }
-            printf("\n");
+            strcat(output,"^");
         }
         movie = movie->next;
     }
+    strcat(output,"@");
+    return output;
 }
  
 struct film * createlist(char * content){
     struct film *movie=(struct film *)malloc(sizeof(struct film));
     struct film *temp;
+    struct film *last;
     temp=movie;
     char word[200];
     int read=0;
@@ -725,20 +674,24 @@ struct film * createlist(char * content){
     int length=0;
     int count=1;
     int special=0;
-    int jump=0;
+    int jump=418;
     word[0]=-1;
     char column[4];
-    char ip[255];
+    char ip[257];
     int com=0;
     int initial=0;
     while ((c = content[read]) )
     {   
-        if(initial==0&&c!='>'){
+        if(initial==0&&c!='<'){
+            ip[length]=c;
+            length++;
             read++;
             continue;
         }
-        if(initial==0&&c=='>'){
+        if(initial==0&&c=='<'){
+            ip[length]='\0';
             initial=1;
+            length=0;
             read++;
             continue;
         }
@@ -760,33 +713,6 @@ struct film * createlist(char * content){
             ip[length+1]='\0';
             break;
         }
-        if(c=='@'){
-            special=5;
-            read++;
-            length=0;
-            continue;
-        }
-        if(special==5){
-           ip[length]=c;
-           read++;
-           length++;
-           continue;
-        }
-
-//Getting sorting criteria
-       // if(c=='~'){
-   //         printf("%d\n",length );
-     //       strcpy(column,word);
-    //        memset(word,0,strlen(word));
-    //        word[0]=-1;
-    //        read++;
-    //    }
-     //   if(column[0]==-1){
-      //      word[read]=c;
-       //     read++;
-      //      continue;
-       // }
-//jump over the header
          if(jump!=418){
            jump++;
          }
@@ -823,7 +749,7 @@ struct film * createlist(char * content){
             continue;
         }
         //when complete a word before comma
-        if((special==0&& c==',')||(special==0&& c=='^')||(special==0&& c==EOF)){
+        if((special==0&& c==',')||(special==0&& c=='^')||(special==0&& c=='@')){
             length=0;
             //empty value
             //*********
@@ -879,12 +805,10 @@ struct film * createlist(char * content){
             }
             //reset count
             count++;
-
             if(count==29){
-
                 count=1;
                 temp->next=(struct film *)malloc(sizeof(struct film));
-                
+                last=temp;
                 temp=temp->next;
             }
 
@@ -898,7 +822,9 @@ struct film * createlist(char * content){
         }
     }
     read++;
+   
 }
+last->next=NULL;
  if(com==3||com==4||com==5||com==6||com==8||com==9||com==13||com==14||com==16||com==19||com==23||com==24||com==25||com==28)
      {
     mergeint(&movie);}
@@ -908,9 +834,10 @@ struct film * createlist(char * content){
     else{
     mergestring(&movie);
     }
-printf("The column is: %d\n",com );
-printf("IP adderss is: %s\n",ip );
-return movie;
+    printf("The column is: %d\n",com );
+    printf("IP adderss is: %s\n",ip );
+    
+    return movie;
 }
 
 
@@ -920,36 +847,30 @@ void *serverfunc(void *socketfd)
 {
     //Get the socket descriptor
     int sock = *(int*)socketfd;
-    int read_size;
-    int bufsize=30;
-    char *content=malloc(35*sizeof(char));
-    char * firstpart=malloc(35*sizeof(char));
+    char byte;
     int count=0;
+    int contentnum=5000;
+    char *content=malloc(5000*sizeof(char));
     //Receive a message from client
-    while( (read_size = recv(sock , content ,bufsize, 0)) > 0 )
+    while( 1)
     {
-        //read size number
-        if(count==0||read_size==bufsize){
-            char * number=malloc(35*sizeof(char));
-            int i=0;
-            while(content[i]!='>'){
-                number[i]=content[i];
-                i++;
-            }
-            bufsize=atoi(number);
-            content=realloc(content,bufsize*sizeof(char));
-            count++;
-            strcpy(firstpart,content);
+        recv(sock , &byte ,1, 0);
+        //finalbyte
+        if(byte=='@'){
+            content[count]=byte;
+            break;
+        }
+        else{
+           content[count]=byte;
+           count++;
+           //Check if string need resizing
+           if(contentnum==count){
+           contentnum=contentnum*2;
+           content = realloc(content, sizeof(char *)*contentnum);
+             }
         }
 
     }
-    content=repathfree(firstpart,content);
-    if(read_size == 0||read_size==-1)
-    {
-        perror("error receive data or client disconnected");
-        fflush(stdout);
-    }
-   
    struct film* movie=createlist(content);
    //Create list
    struct film *temp;
@@ -960,23 +881,16 @@ void *serverfunc(void *socketfd)
    struct list * result=(struct list *)malloc(sizeof(struct list));
    result->start=movie;
    result->end=temp;
-   //Critical Section(Add linked list)
-   pthread_mutex_lock(&key);
-   linkedlists[countlists]=result;
-   if(numoflists==countlists){
-        numoflists=numoflists*2;
-        linkedlists = realloc(linkedlists, sizeof(struct film*)*numoflists);
-             }
-   pthread_mutex_unlock(&key);
-   //Critical Section Ends
-   //close(socketfd);
+   char * output=print2(movie);
+   if (write(sock, output, strlen(output)) == -1) {
+        perror("fail to send datas.");
+        exit(-1);
+    }
     return 0;
 } 
  
 int main(int argc , char *argv[])
 {   
-    //Initialize global
-    linkedlists=malloc((sizeof(struct list *) * (2000)));
     //Initialize mutex 
     if (pthread_mutex_init(&key, NULL) != 0)
     {
