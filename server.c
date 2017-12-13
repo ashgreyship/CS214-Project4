@@ -432,11 +432,12 @@ void mergestring(struct film** root)
 char* print2(struct film *list) {
     struct film *movie;
     movie = list;
-    char * output=malloc(50000*sizeof(char));
+    int number=1200;
+    char * output=malloc(1200*sizeof(char));
    
 
 
-    strcpy(output,"color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes");
+    strcpy(output,"color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes^");
     
     while (movie) {
         char * c=malloc(10*sizeof(char));
@@ -656,6 +657,8 @@ char* print2(struct film *list) {
             }
             strcat(output,"^");
         }
+        number=number*2;
+        output=realloc(output,number*(sizeof(char)));
         movie = movie->next;
     }
     strcat(output,"@");
