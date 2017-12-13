@@ -1260,9 +1260,6 @@ int main(int argc, char **argv) {
         closedir(d);
     }
 
-    //printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
-
-
    
 
 
@@ -1282,7 +1279,6 @@ while (buf_idx < 100000 && 1 == read(sockfd, &buf[buf_idx], 1))
 }
 printf("%s\n",buf );
 
-    printf("%s", buffer);
     close(sockfd);
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
     printf("%s\n", outputpath);
