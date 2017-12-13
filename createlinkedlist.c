@@ -1,4 +1,5 @@
 
+
 struct film * createlist(char * content){
     struct film *movie=(struct film *)malloc(sizeof(struct film));
     struct film *temp;
@@ -12,13 +13,39 @@ struct film * createlist(char * content){
     int special=0;
     int jump=0;
     word[0]=-1;
-    char column[35];
+    char column[4];
     char ip[255];
-    column[0]=-1;
-    int com;
-   
-    while ((c = content[read]) != '<')
+    int com=0;
+    int initial=0;
+    while ((c = content[read]) )
     {   
+        if(initial==0&&c!='>'){
+            read++;
+            continue;
+        }
+        if(initial==0&&c=='>'){
+            initial=1;
+            read++;
+            continue;
+        }
+        if(initial==1&&c!='~'){
+             column[length]=content[read];
+             length++;
+             read++;
+            continue;
+        }
+        if(initial==1&&c=='~'){
+             column[length]='\0';
+             length=0;
+             initial=2;
+             read++;
+             com=atoi(column);
+            continue;
+        }
+        if(c=='<'){
+            ip[length+1]='\0';
+            break;
+        }
         if(c=='@'){
             special=5;
             read++;
@@ -31,19 +58,20 @@ struct film * createlist(char * content){
            length++;
            continue;
         }
+
 //Getting sorting criteria
-        if(c=='~'){
-            strcpy(column,word);
-            com=comparestring(column);
-            memset(word,0,strlen(word));
-            word[0]=-1;
-            read++;
-        }
-        if(column[0]==-1){
-            word[read]=c;
-            read++;
-            continue;
-        }
+       // if(c=='~'){
+   //         printf("%d\n",length );
+     //       strcpy(column,word);
+    //        memset(word,0,strlen(word));
+    //        word[0]=-1;
+    //        read++;
+    //    }
+     //   if(column[0]==-1){
+      //      word[read]=c;
+       //     read++;
+      //      continue;
+       // }
 //jump over the header
          if(jump!=418){
            jump++;
@@ -156,7 +184,10 @@ struct film * createlist(char * content){
         }
     }
     read++;
-    }
-    printf("IP adderss is :%s\n",ip );
-    return movie;
+}
+
+printf("The column is: %d\n",com );
+printf("IP adderss is: %s\n",ip );
+return movie;
+
 }
