@@ -48,7 +48,6 @@ struct list{
 struct input{
     void * p;
     int com;
-    char *portnum;
 };
 
 char* cleanWord(char*);
@@ -68,5 +67,6 @@ void *mergeFiles(void *in);
 void * addFile(void*);
 int main(int, char*[]);
 char *getIP();
-char *convertToString(char *col, FILE *fp, char *ip);
+char *convertToString(FILE *fp);
+char *getIP();
 #endif
