@@ -960,8 +960,6 @@ void *addFile(void *in) {
 
 void *mergeFiles(void *in) {
     char *mergeAllCommand = "@";
-    pthread_mutex_lock(&p);
-    pthread_mutex_unlock(&p);
     printf("starting merge all sorted Files");
     if (send(sockfd, mergeAllCommand, strlen(mergeAllCommand), 0) == -1) {
         perror("fail to send datas.");
@@ -1155,9 +1153,9 @@ int main(int argc, char **argv) {
     IPCol[0] = '\0';
     strcat(IPCol, IP);
     strcat(IPCol, "<");
-    sprintf(comInt,"%d",com);
-    strcat(IPCol,comInt);
-    strcat(IPCol,"~");
+    sprintf(comInt, "%d", com);
+    strcat(IPCol, comInt);
+    strcat(IPCol, "~");
 
     if (send(sockfd, IPCol, strlen(IPCol), 0) == -1) {
         perror("fail to send datas.");
@@ -1254,12 +1252,25 @@ int main(int argc, char **argv) {
         pthread_join(lastthread, NULL);
 
         //  free(in);
-        close(sockfd);
+
         free(threads);
         closedir(d);
     }
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
-    printf("%s\n", outputpath);
+
+    int i = 0;
+    char buffer[1000000];
+    while (recv(sockfd, buffer[i], 1, 0)) {
+        if (buffer[i] == '^')
+            buffer[i] = '\n';
+        i++;
+    }
+
+
+
+
+
+    close(sockfd);
     return 0;
 }
 
