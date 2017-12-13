@@ -499,22 +499,15 @@ char *convertToString(FILE *fp) {
     char *fullStr = (char *) malloc(1000000);
     fullStr[0] = '\0';
 
-    long allocationAmt = 500;
-
-    char *newStr = (char *) malloc(500);
+    char *newStr=malloc(5000);
     newStr[0] = '\0';
     int i = 0;
     while (fgets(newStr, 500, fp) != NULL) {
+        newStr[strcspn(newStr, "\n")] = 0;
         if (i == 0) {
             continue;
         }
-//        if (strlen(fullStr) + strlen(newStr) > allocationAmt - 10) {
-//            allocationAmt = allocationAmt * 2;
-//            char *tempStr = malloc(allocationAmt * 2);
-//            strcpy (tempStr, fullStr);
-//            fullStr = malloc(allocationAmt);
-//            strcpy (fullStr, tempStr);
-//        }
+
         strncat(fullStr, newStr, strlen(newStr) - 1);
         strcat(fullStr, "^");
         i++;
