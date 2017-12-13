@@ -953,7 +953,6 @@ void freelist(struct film *root) {
 }
 
 void *addFile(void *in) {
-    char *ip = getIP();
     struct input *input = in;
     char col[50];
     sprintf(col, "%d", input->com);
@@ -974,7 +973,6 @@ void *mergeFiles(void *in) {
     char *mergeAllCommand = "@";
     pthread_mutex_lock(&p);
     pthread_mutex_unlock(&p);
-    struct input *input = in;
     printf("starting merge all sorted Files");
 
     //char *fileString = input->p;
@@ -1127,7 +1125,7 @@ int main(int argc, char **argv) {
         column = argv[2];
         portnum = argv[6];
     }
-    printf("%s\n", portnum);
+    printf("Port num is %s\n", portnum);
 //*****************************************Command Line Checking Complete{FINNALLY!!!}*****************************************
 //calculate sorting criteria
     int com;
@@ -1166,10 +1164,12 @@ int main(int argc, char **argv) {
 //**************************************Send IP and column name(char *onetime = "1234567<duration~";)**********************
     char *IP = getIP();
     char *IPCol = malloc(100);
+    char comInt[10];
     IPCol[0] = '\0';
     strcat(IPCol, IP);
     strcat(IPCol, "<");
-    strcat(IPCol,column);
+    sprintf(comInt,"%d",com);
+    strcat(IPCol,comInt);
     strcat(IPCol,"~");
 
     if (send(sockfd, IPCol, strlen(IPCol), 0) == -1) {
