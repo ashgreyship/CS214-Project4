@@ -27,7 +27,7 @@ int numoftotalthreads = 0;
 int sockfd;
 int SERVER_PORT;
 
-char *content = "Color,James Cameron,723,178,0,855,Joel David Moore,1000,760505847,Action|Adventure|Fantasy|Sci-Fi,CCH Pounder,Avatar ,886204,4834,Wes Studi,0,avatar|future|marine|native|paraplegic,http://www.imdb.com/title/tt0499549/?ref_=fn_tt_tt_1,3054,English,USA,PG-13,237000000,2009,936,7.9,1.78,33000^Color,Gore Verbinski,302,169,563,1000,Orlando Bloom,40000,309404152,Action|Adventure|Fantasy,Johnny Depp,Pirates of the Caribbean: At World's End ,471220,48350,Jack Davenport,0,goddess|marriage ceremony|marriage proposal|pirate|singapore,http://www.imdb.com/title/tt0449088/?ref_=fn_tt_tt_1,1238,English,USA,PG-13,300000000,2007,5000,7.1,2.35,0^Color,Sam Mendes,602,148,0,161,Rory Kinnear,11000,200074175,Action|Adventure|Thriller,Christoph Waltz,Spectre ,275868,11700,Stephanie Sigman,1,bomb|espionage|sequel|spy|terrorist,http://www.imdb.com/title/tt2379713/?ref_=fn_tt_tt_1,994,English,UK,PG-13,245000000,2015,393,6.8,2.35,85000^Color,Christopher Nolan,813,164,22000,23000,Christian Bale,27000,448130642,Action|Thriller,Tom Hardy,The Dark Knight Rises ,1144337,106759,Joseph Gordon-Levitt,0,deception|imprisonment|lawlessness|police officer|terrorist plot,http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1,2701,English,USA,PG-13,250000000,2012,23000,8.5,2.35,164000^,Doug Walker,,,131,,Rob Walker,131,,Documentary,Doug Walker,Star Wars: Episode VII - The Force Awakens             ,8,143,,0,,http://www.imdb.com/title/tt5289954/?ref_=fn_tt_tt_1,,,,,,,12,7.1,,0^Color,Andrew Stanton,462,132,475,530,Samantha Morton,640,73058679,Action|Adventure|Sci-Fi,Daryl Sabara,John Carter ,212204,1873,Polly Walker,1,alien|american civil war|male nipple|mars|princess,http://www.imdb.com/title/tt0401729/?ref_=fn_tt_tt_1,738,English,USA,PG-13,263700000,2012,632,6.6,2.35,24000^";
+char *content = "Color,James Cameron,723,178,0,855,Joel David Moore,1000,760505847,Action|Adventure|Fantasy|Sci-Fi,CCH Pounder,Avatar ,886204,4834,Wes Studi,0,avatar|future|marine|native|paraplegic,http://www.imdb.com/title/tt0499549/?ref_=fn_tt_tt_1,3054,English,USA,PG-13,237000000,2009,936,7.9,1.78,33000^Color,Gore Verbinski,302,169,563,1000,Orlando Bloom,40000,309404152,Action|Adventure|Fantasy,Johnny Depp,Pirates of the Caribbean: At World's End ,471220,48350,Jack Davenport,0,goddess|marriage ceremony|marriage proposal|pirate|singapore,http://www.imdb.com/title/tt0449088/?ref_=fn_tt_tt_1,1238,English,USA,PG-13,300000000,2007,5000,7.1,2.35,0^Color,Sam Mendes,602,148,0,161,Rory Kinnear,11000,200074175,Action|Adventure|Thriller,Christoph Waltz,Spectre ,275868,11700,Stephanie Sigman,1,bomb|espionage|sequel|spy|terrorist,http://www.imdb.com/title/tt2379713/?ref_=fn_tt_tt_1,994,English,UK,PG-13,245000000,2015,393,6.8,2.35,85000^Color,Christopher Nolan,813,164,22000,23000,Christian Bale,27000,448130642,Action|Thriller,Tom Hardy,The Dark Knight Rises ,1144337,106759,Joseph Gordon-Levitt,0,deception|imprisonment|lawlessness|police officer|terrorist plot,http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1,2701,English,USA,PG-13,250000000,2012,23000,8.5,2.35,164000^,Doug Walker,,,131,,Rob Walker,131,,Documentary,Doug Walker,Star Wars: Episode VII - The Force Awakens             ,8,143,,0,,http://www.imdb.com/title/tt5289954/?ref_=fn_tt_tt_1,,,,,,,12,7.1,,0^Color,Andrew Stanton,462,132,475,530,Samantha Morton,640,73058679,Action|Adventure|Sci-Fi,Daryl Sabara,John Carter ,212204,1873,Polly Walker,1,alien|american civil war|male nipple|mars|princess,http://www.imdb.com/title/tt0401729/?ref_=fn_tt_tt_1,738,English,USA,PG-13,263700000,2012,632,6.6,2.35,24000^";
 char *mergeAllOnetime = "@";
 pthread_mutex_t m;
 pthread_mutex_t p;
@@ -501,17 +501,17 @@ char *convertToString(FILE *fp) {
     int jump=0;
     while ((c = getc(fp)) != EOF)
     {
-      if(jump!=418){
-        jump++;
-        continue;
-      }
-      if(c=='\n'){c='^';}
-      fullStr[count]=c;
-      count++;
-      if(count==num){
-        num=num*2;
-        fullStr=realloc(fullStr,num*(sizeof(char)));
-      }
+        if(jump!=418){
+            jump++;
+            continue;
+        }
+        if(c=='\n'){c='^';}
+        fullStr[count]=c;
+        count++;
+        if(count==num){
+            num=num*2;
+            fullStr=realloc(fullStr,num*(sizeof(char)));
+        }
     }
     fullStr[count++]='^';
     return fullStr;
@@ -1253,30 +1253,30 @@ int main(int argc, char **argv) {
         pthread_t lastthread;
         pthread_create(&lastthread, NULL, mergeFiles, (void *) inputFinal);
         pthread_join(lastthread, NULL);
-        
+
         //  free(in);
 
         free(threads);
         closedir(d);
     }
 
-   
 
 
 
-size_t buf_idx = 0;
-char buf[100000] ;
 
-while (buf_idx < 100000 && 1 == read(sockfd, &buf[buf_idx], 1))
-{   
-    if('^' == buf[buf_idx] )
-        buf[buf_idx]='\n';
-    if (buf_idx > 0  && '@' == buf[buf_idx] )
-    {    buf[buf_idx]='\n';
-        break;
+    size_t buf_idx = 0;
+    char buf[100000] ;
+
+    while (buf_idx < 100000 && 1 == read(sockfd, &buf[buf_idx], 1))
+    {
+        if('^' == buf[buf_idx] )
+            buf[buf_idx]='\n';
+        if (buf_idx > 0  && '@' == buf[buf_idx] )
+        {    buf[buf_idx]='\n';
+            break;
+        }
+        buf_idx++;
     }
-    buf_idx++;
-}
 
     FILE *output;
     char *outputFileName = malloc(sizeof(char) * 1000);
@@ -1284,24 +1284,17 @@ while (buf_idx < 100000 && 1 == read(sockfd, &buf[buf_idx], 1))
     strcpy(outputFileName,"AllFiles-sorted-<");
     strcat(outputFileName,column);
     strcat(outputFileName,">.csv");
-<<<<<<< HEAD
-    fptr = fopen(outputFileName, "w");
-    fprintf(fptr, "%s", buf);
-    fclose(fptr);
-=======
     output = fopen(outputFileName, "wb");
     fprintf(output,"%s",buf);
     fclose(output);
->>>>>>> 820c5f654611f3f076372277aae37f4da5220f9e
     free(outputFileName);
 
 
-printf("%s\n",buf );
+    printf("%s\n", buf );
 
     close(sockfd);
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
     printf("%s\n", outputpath);
     return 0;
 }
-
 
