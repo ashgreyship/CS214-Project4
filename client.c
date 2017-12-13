@@ -1,9 +1,9 @@
 #include <pthread.h>
 #include <string.h>
-#include <ctype.h>
-#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -15,7 +15,6 @@
 #include <netdb.h>
 #include <errno.h>
 
-#define MAX_BUF 4096
 
 pthread_t **threads;
 int numofthreads = 2000;
@@ -26,8 +25,8 @@ int countlists = 0;
 int numoftotalthreads = 0;
 int sockfd;
 int SERVER_PORT;
-//char *content = "duration~color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes^Color,James Cameron,723,178,0,855,Joel David Moore,1000,760505847,Action|Adventure|Fantasy|Sci-Fi,CCH Pounder,Avatar ,886204,4834,Wes Studi,0,avatar|future|marine|native|paraplegic,http://www.imdb.com/title/tt0499549/?ref_=fn_tt_tt_1,3054,English,USA,PG-13,237000000,2009,936,7.9,1.78,33000^Color,Gore Verbinski,302,169,563,1000,Orlando Bloom,40000,309404152,Action|Adventure|Fantasy,Johnny Depp,Pirates of the Caribbean: At World's End ,471220,48350,Jack Davenport,0,goddess|marriage ceremony|marriage proposal|pirate|singapore,http://www.imdb.com/title/tt0449088/?ref_=fn_tt_tt_1,1238,English,USA,PG-13,300000000,2007,5000,7.1,2.35,0^Color,Sam Mendes,602,148,0,161,Rory Kinnear,11000,200074175,Action|Adventure|Thriller,Christoph Waltz,Spectre ,275868,11700,Stephanie Sigman,1,bomb|espionage|sequel|spy|terrorist,http://www.imdb.com/title/tt2379713/?ref_=fn_tt_tt_1,994,English,UK,PG-13,245000000,2015,393,6.8,2.35,85000^Color,Christopher Nolan,813,164,22000,23000,Christian Bale,27000,448130642,Action|Thriller,Tom Hardy,The Dark Knight Rises ,1144337,106759,Joseph Gordon-Levitt,0,deception|imprisonment|lawlessness|police officer|terrorist plot,http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1,2701,English,USA,PG-13,250000000,2012,23000,8.5,2.35,164000^,Doug Walker,,,131,,Rob Walker,131,,Documentary,Doug Walker,Star Wars: Episode VII - The Force Awakens             ,8,143,,0,,http://www.imdb.com/title/tt5289954/?ref_=fn_tt_tt_1,,,,,,,12,7.1,,0^Color,Andrew Stanton,462,132,475,530,Samantha Morton,640,73058679,Action|Adventure|Sci-Fi,Daryl Sabara,John Carter ,212204,1873,Polly Walker,1,alien|american civil war|male nipple|mars|princess,http://www.imdb.com/title/tt0401729/?ref_=fn_tt_tt_1,738,English,USA,PG-13,263700000,2012,632,6.6,2.35,24000@1234567<";
-char *content = "abcdefg";
+char *content = "2206>duration~color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes^Color,James Cameron,723,178,0,855,Joel David Moore,1000,760505847,Action|Adventure|Fantasy|Sci-Fi,CCH Pounder,Avatar ,886204,4834,Wes Studi,0,avatar|future|marine|native|paraplegic,http://www.imdb.com/title/tt0499549/?ref_=fn_tt_tt_1,3054,English,USA,PG-13,237000000,2009,936,7.9,1.78,33000^Color,Gore Verbinski,302,169,563,1000,Orlando Bloom,40000,309404152,Action|Adventure|Fantasy,Johnny Depp,Pirates of the Caribbean: At World's End ,471220,48350,Jack Davenport,0,goddess|marriage ceremony|marriage proposal|pirate|singapore,http://www.imdb.com/title/tt0449088/?ref_=fn_tt_tt_1,1238,English,USA,PG-13,300000000,2007,5000,7.1,2.35,0^Color,Sam Mendes,602,148,0,161,Rory Kinnear,11000,200074175,Action|Adventure|Thriller,Christoph Waltz,Spectre ,275868,11700,Stephanie Sigman,1,bomb|espionage|sequel|spy|terrorist,http://www.imdb.com/title/tt2379713/?ref_=fn_tt_tt_1,994,English,UK,PG-13,245000000,2015,393,6.8,2.35,85000^Color,Christopher Nolan,813,164,22000,23000,Christian Bale,27000,448130642,Action|Thriller,Tom Hardy,The Dark Knight Rises ,1144337,106759,Joseph Gordon-Levitt,0,deception|imprisonment|lawlessness|police officer|terrorist plot,http://www.imdb.com/title/tt1345836/?ref_=fn_tt_tt_1,2701,English,USA,PG-13,250000000,2012,23000,8.5,2.35,164000^,Doug Walker,,,131,,Rob Walker,131,,Documentary,Doug Walker,Star Wars: Episode VII - The Force Awakens             ,8,143,,0,,http://www.imdb.com/title/tt5289954/?ref_=fn_tt_tt_1,,,,,,,12,7.1,,0^Color,Andrew Stanton,462,132,475,530,Samantha Morton,640,73058679,Action|Adventure|Sci-Fi,Daryl Sabara,John Carter ,212204,1873,Polly Walker,1,alien|american civil war|male nipple|mars|princess,http://www.imdb.com/title/tt0401729/?ref_=fn_tt_tt_1,738,English,USA,PG-13,263700000,2012,632,6.6,2.35,24000@1234567<";
+//char *content = "abcdefg";
 char *sortedAll = "mergeAllFiles";
 pthread_mutex_t m;
 pthread_mutex_t p;
@@ -492,6 +491,47 @@ void mergestring(struct film **root) {
     *root = sortedmergestring(a, b);
 }
 
+
+char* convertToString(char* col, FILE* fp, char* ip) {
+
+    printf("yes" );
+    char* ipLine = malloc(strlen(ip)+2);
+    strcpy(ipLine, ip);
+    strcat(ipLine, "<");
+
+    char* colLine = malloc(strlen(ip)+2);
+    strcpy(colLine, col);
+    strcat(colLine, "~");
+    
+    char* fullStr = (char*) malloc(5000);
+    fullStr[0] = '\0';
+
+    long allocationAmt = 500;
+
+    char* newStr = (char*) malloc(500);
+    newStr[0] = '\0';
+    while (fgets(newStr, 500, fp) != NULL) {
+        if (strlen(fullStr) + strlen(newStr) > allocationAmt - 10) {
+            allocationAmt = allocationAmt * 2;
+            char* tempStr = malloc(allocationAmt * 2);
+            strcpy (tempStr, fullStr);
+            fullStr = malloc(allocationAmt);
+            strcpy (fullStr, tempStr);
+        }
+
+        strncat(fullStr, newStr, strlen(newStr)-1);
+        strcat(fullStr, "^");
+    }
+    strcat(fullStr, "@");
+    char* returnStr = malloc(strlen(fullStr) + strlen(ipLine) + strlen(colLine)+100);
+    sprintf(returnStr, "%d", (int)(strlen(fullStr) + strlen(ipLine) + strlen(colLine) + 100));
+    strcat(returnStr, ">");
+    strcat(returnStr, colLine);
+    strcat(returnStr, fullStr);
+    strcat(returnStr, ipLine);
+
+    return returnStr;
+} 
 void print2(struct film *list) {
     struct film *movie;
     movie = list;
@@ -906,14 +946,14 @@ void *addFile(void *in) {
     char *portnum = input->portnum;
     printf("starting add file, port num is %s\n", portnum);
 
-    //char *fileString = input->p;
-    char fileString[100];
-    strcpy(fileString,input->p);
+    char *fileString = input->p;
+    //char fileString[100];
+    //strcpy(fileString,input->p);
     if (send(sockfd, fileString, strlen(fileString), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
     }
-    memset(fileString,0,sizeof(fileString));
+    
 
     pthread_exit(NULL);
 }
