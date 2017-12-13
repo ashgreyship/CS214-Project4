@@ -496,7 +496,7 @@ void mergestring(struct film **root) {
 char *convertToString(FILE *fp) {
 
 
-    char *fullStr = (char *) malloc(5000);
+    char *fullStr = (char *) malloc(1000000);
     fullStr[0] = '\0';
 
     long allocationAmt = 500;
@@ -508,22 +508,18 @@ char *convertToString(FILE *fp) {
         if (i == 0) {
             continue;
         }
-        if (strlen(fullStr) + strlen(newStr) > allocationAmt - 10) {
-            allocationAmt = allocationAmt * 2;
-            char *tempStr = malloc(allocationAmt * 2);
-            strcpy (tempStr, fullStr);
-            fullStr = malloc(allocationAmt);
-            strcpy (fullStr, tempStr);
-        }
-
+//        if (strlen(fullStr) + strlen(newStr) > allocationAmt - 10) {
+//            allocationAmt = allocationAmt * 2;
+//            char *tempStr = malloc(allocationAmt * 2);
+//            strcpy (tempStr, fullStr);
+//            fullStr = malloc(allocationAmt);
+//            strcpy (fullStr, tempStr);
+//        }
         strncat(fullStr, newStr, strlen(newStr) - 1);
         strcat(fullStr, "^");
         i++;
     }
-    char *returnStr = malloc(strlen(fullStr) + 100);
-    strcat(returnStr, fullStr);
-    strcat(returnStr, "^");
-    return returnStr;
+    return fullStr;
 }
 
 
@@ -974,8 +970,6 @@ void *mergeFiles(void *in) {
     pthread_mutex_lock(&p);
     pthread_mutex_unlock(&p);
     printf("starting merge all sorted Files");
-
-    //char *fileString = input->p;
     if (send(sockfd, mergeAllCommand, strlen(mergeAllCommand), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
