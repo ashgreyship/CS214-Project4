@@ -1259,18 +1259,9 @@ int main(int argc, char **argv) {
         free(threads);
         closedir(d);
     }
-<<<<<<< HEAD
+
     //printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
 
-    int i = 0;
-    char buffer[1000000];
-    while (recv(sockfd, buffer[i], 1, 0)) {
-        if (buffer[i] == '^')
-            buffer[i] = '\n';
-        i++;
-    }
-=======
->>>>>>> b46ca18d699147ca802c594935acd0430ba7f1b5
 
    
 
