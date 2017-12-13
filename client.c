@@ -1277,7 +1277,7 @@ int main(int argc, char **argv) {
     strcat(outputFileName,column);
     strcat(outputFileName,">.csv");
     fptr = fopen(outputFileName, "w");
-    fprintf(fptr, "%s\n", buf);
+    fprintf(fptr, "%s", buf);
     fclose(fptr);
     free(outputFileName);
 
