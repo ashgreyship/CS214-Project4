@@ -1272,11 +1272,12 @@ int main(int argc, char **argv) {
     FILE *fptr;
     char *outputFileName = malloc(sizeof(char) * 1000);
     outputFileName[0] = '\0';
-    strcpy(outputFileName,"AllFiles-sorted-<");
+    strcpy(outputFileName,outputpath);
+    strcat(outputFileName,"/AllFiles-sorted-<");
     strcat(outputFileName,column);
     strcat(outputFileName,">.csv");
     fptr = fopen(outputFileName, "w");
-    fprintf(fptr, "%s\n", buf[10000000]);
+    fprintf(fptr, "%s\n", buf);
     fclose(fptr);
     free(outputFileName);
 
