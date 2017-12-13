@@ -499,7 +499,7 @@ char *convertToString(FILE *fp) {
     char *fullStr = (char *) malloc(1000000);
     fullStr[0] = '\0';
 
-    char *newStr=malloc(5000);
+    char *newStr = malloc(5000);
     newStr[0] = '\0';
     int i = 0;
     while (fgets(newStr, 500, fp) != NULL) {
@@ -960,7 +960,7 @@ void *addFile(void *in) {
 
 void *mergeFiles(void *in) {
     char *mergeAllCommand = "@";
-    printf("starting merge all sorted Files");
+    //printf("starting merge all sorted Files");
     if (send(sockfd, mergeAllCommand, strlen(mergeAllCommand), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
@@ -970,9 +970,6 @@ void *mergeFiles(void *in) {
 
 
 void *dirthread(void *in) {
-    pthread_mutex_lock(&p);
-    printf("%lu,", pthread_self());
-    pthread_mutex_unlock(&p);
     DIR *d;
     struct dirent *dir;
     struct input *input = in;
@@ -1256,7 +1253,7 @@ int main(int argc, char **argv) {
         free(threads);
         closedir(d);
     }
-    printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
+    //printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
 
     int i = 0;
     char buffer[1000000];
@@ -1265,9 +1262,7 @@ int main(int argc, char **argv) {
             buffer[i] = '\n';
         i++;
     }
-
-
-
+    printf("%s", buffer);
 
 
     close(sockfd);
