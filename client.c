@@ -1262,9 +1262,9 @@ int main(int argc, char **argv) {
             buffer[i] = '\n';
         i++;
     }
+
+
     printf("%s", buffer);
-
-
     close(sockfd);
     return 0;
 }
