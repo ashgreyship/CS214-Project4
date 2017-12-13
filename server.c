@@ -431,7 +431,186 @@ void mergestring(struct film** root)
 }
 
 //end of sorting functions
+void print2(struct film *list) {
+    struct film *movie;
+    movie = list;
+    printf("%s\n",
+           "color,director_name,num_critic_for_reviews,duration,director_facebook_likes,actor_3_facebook_likes,actor_2_name,actor_1_facebook_likes,gross,genres,actor_1_name,movie_title,num_voted_users,cast_total_facebook_likes,actor_3_name,facenumber_in_poster,plot_keywords,movie_imdb_link,num_user_for_reviews,language,country,content_rating,budget,title_year,actor_2_facebook_likes,imdb_score,aspect_ratio,movie_facebook_likes");
+    while (movie) {
+        if (movie->empty == 1) {
+            if (movie->color == NULL) {
 
+                printf(",");
+            } else {
+                printf("%s,", movie->color);
+            }
+
+            if (movie->director_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->director_name);
+            }
+
+            if (movie->num_critic_for_reviews == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->num_critic_for_reviews);
+            }
+
+
+            if (movie->duration == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->duration);
+            }
+
+
+            if (movie->director_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->director_facebook_likes);
+            }
+
+
+            if (movie->actor_3_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->actor_3_facebook_likes);
+            }
+
+            if (movie->actor_2_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->actor_2_name);
+            }
+
+
+            if (movie->actor_1_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->actor_1_facebook_likes);
+            }
+
+            if (movie->gross == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->gross);
+            }
+            if (movie->generes == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->generes);
+            }
+
+            if (movie->actor_1_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->actor_1_name);
+            }
+
+            if (movie->movie_title == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->movie_title);
+            }
+
+
+            if (movie->num_voted_users == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->num_voted_users);
+            }
+
+
+            if (movie->cast_total_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->cast_total_facebook_likes);
+            }
+
+            if (movie->actor_3_name == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->actor_3_name);
+            }
+
+            if (movie->facenumber_in_poster == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->facenumber_in_poster);
+            }
+
+            if (movie->plot_keywords == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->plot_keywords);
+            }
+
+            if (movie->movie_imdb_link == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->movie_imdb_link);
+            }
+
+
+            if (movie->num_user_for_reviews == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->num_user_for_reviews);
+            }
+            if (movie->language == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->language);
+            }
+
+            if (movie->country == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->country);
+            }
+
+            if (movie->content_rating == NULL) {
+                printf(",");
+            } else {
+                printf("%s,", movie->content_rating);
+            }
+
+            if (movie->budget == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->budget);
+            }
+
+            if (movie->title_year == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->title_year);
+            }
+
+            if (movie->actor_2_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->actor_2_facebook_likes);
+            }
+
+
+            printf("%g,", movie->imdb_score);
+
+            if (movie->aspect_ratio == -1) { printf(","); }
+            else { printf("%g,", movie->aspect_ratio); }
+
+            if (movie->movie_facebook_likes == -1) {
+                printf(",");
+            } else {
+                printf("%d,", movie->movie_facebook_likes);
+            }
+            printf("\n");
+        }
+        movie = movie->next;
+    }
+}
+ 
 struct film * createlist(char * content){
     struct film *movie=(struct film *)malloc(sizeof(struct film));
     struct film *temp;
@@ -617,10 +796,7 @@ struct film * createlist(char * content){
     }
     read++;
 }
-printf("The column is: %d\n",com );
-printf("IP adderss is: %s\n",ip );
-
-    if(com==3||com==4||com==5||com==6||com==8||com==9||com==13||com==14||com==16||com==19||com==23||com==24||com==25||com==28)
+ if(com==3||com==4||com==5||com==6||com==8||com==9||com==13||com==14||com==16||com==19||com==23||com==24||com==25||com==28)
      {
     mergeint(&movie);}
     if(com==26||com==27){
@@ -629,6 +805,8 @@ printf("IP adderss is: %s\n",ip );
     else{
     mergestring(&movie);
     }
+printf("The column is: %d\n",com );
+printf("IP adderss is: %s\n",ip );
 return movie;
 }
 
@@ -668,15 +846,15 @@ void *serverfunc(void *socketfd)
         perror("error receive data or client disconnected");
         fflush(stdout);
     }
+   
    struct film* movie=createlist(content);
-
    //Create list
    struct film *temp;
    temp=movie;
     while(temp->next){
       temp=temp->next;
      }  
-   struct list* result=malloc(sizeof(struct list*));
+   struct list * result=(struct list *)malloc(sizeof(struct list));
    result->start=movie;
    result->end=temp;
    //Critical Section(Add linked list)
