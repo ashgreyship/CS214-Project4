@@ -494,24 +494,26 @@ void mergestring(struct film **root) {
 
 
 char *convertToString(FILE *fp) {
-
-
-    char *fullStr = (char *) malloc(1000000);
-    fullStr[0] = '\0';
-
-    char *newStr = malloc(5000);
-    newStr[0] = '\0';
-    int i = 0;
-    while (fgets(newStr, 500, fp) != NULL) {
-        newStr[strcspn(newStr, "\n")] = 0;
-        if (i == 0) {
-            continue;
-        }
-
-        strncat(fullStr, newStr, strlen(newStr) - 1);
-        strcat(fullStr, "^");
-        i++;
+    char c;
+    char *fullStr=malloc(5000*(sizeof(char)));
+    int num=5000;
+    int count=0;
+    int jump=0;
+    while ((c = getc(fp)) != EOF)
+    {
+      if(jump!=418){
+        jump++;
+        continue;
+      }
+      if(c=='\n'){c='^';}
+      fullStr[count]=c;
+      count++;
+      if(count==num){
+        num=num*2;
+        fullStr=realloc(fullStr,num*(sizeof(char)));
+      }
     }
+    fullStr[count++]='^';
     return fullStr;
 }
 
@@ -960,16 +962,20 @@ void *addFile(void *in) {
 
 void *mergeFiles(void *in) {
     char *mergeAllCommand = "@";
-    //printf("starting merge all sorted Files");
+    printf("starting merge all sorted Files");
     if (send(sockfd, mergeAllCommand, strlen(mergeAllCommand), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
     }
+
     pthread_exit(NULL);
 }
 
 
 void *dirthread(void *in) {
+    pthread_mutex_lock(&p);
+    printf("%lu,", pthread_self());
+    pthread_mutex_unlock(&p);
     DIR *d;
     struct dirent *dir;
     struct input *input = in;
@@ -1150,9 +1156,9 @@ int main(int argc, char **argv) {
     IPCol[0] = '\0';
     strcat(IPCol, IP);
     strcat(IPCol, "<");
-    sprintf(comInt, "%d", com);
-    strcat(IPCol, comInt);
-    strcat(IPCol, "~");
+    sprintf(comInt,"%d",com);
+    strcat(IPCol,comInt);
+    strcat(IPCol,"~");
 
     if (send(sockfd, IPCol, strlen(IPCol), 0) == -1) {
         perror("fail to send datas.");
@@ -1247,12 +1253,13 @@ int main(int argc, char **argv) {
         pthread_t lastthread;
         pthread_create(&lastthread, NULL, mergeFiles, (void *) inputFinal);
         pthread_join(lastthread, NULL);
-
+        
         //  free(in);
 
         free(threads);
         closedir(d);
     }
+<<<<<<< HEAD
     //printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
 
     int i = 0;
@@ -1262,10 +1269,32 @@ int main(int argc, char **argv) {
             buffer[i] = '\n';
         i++;
     }
+=======
+>>>>>>> b46ca18d699147ca802c594935acd0430ba7f1b5
 
+   
+
+
+
+size_t buf_idx = 0;
+char buf[100000] ;
+
+while (buf_idx < 100000 && 1 == read(sockfd, &buf[buf_idx], 1))
+{   
+    if('^' == buf[buf_idx] )
+        buf[buf_idx]='\n';
+    if (buf_idx > 0  && '@' == buf[buf_idx] )
+    {
+        break;
+    }
+    buf_idx++;
+}
+printf("%s\n",buf );
 
     printf("%s", buffer);
     close(sockfd);
+    printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
+    printf("%s\n", outputpath);
     return 0;
 }
 
