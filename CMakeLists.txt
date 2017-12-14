@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
         sorter.c
-        sorter.h
         README.md
         client.c
         createlinkedlist.c

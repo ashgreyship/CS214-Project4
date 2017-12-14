@@ -49,7 +49,7 @@ The server has only one parameter: ‘-p’, and is required for operation:
  
 Client
 Your client should traverse all subdirectories under the directory it is given. For each file it finds, it should spawn a thread. Each thread it spawns should read in the file, construct a search request, connect to your server, send the request to your server and then wait for and read back the server’s response to be sure the file was sorted. Once the client has sent all files under the search directory to the server, it should send the server another request to give it the sorted version of all the files it was sent. When the server responds and sends back the sorted version of all the files, the client should output a SINGLE  CSV file named:
-                AllFiles-sorted-<fieldname>.csv.
+                AllFiles-sorted-\<fieldname\>.csv.
  
 The client need not output anything to STDOUT.
  

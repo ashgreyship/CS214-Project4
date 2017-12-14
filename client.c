@@ -495,25 +495,26 @@ void mergestring(struct film **root) {
 
 char *convertToString(FILE *fp) {
     char c;
-    char *fullStr=malloc(5000*(sizeof(char)));
-    int num=5000;
-    int count=0;
-    int jump=0;
-    while ((c = getc(fp)) != EOF)
-    {
-        if(jump!=418){
+    char *fullStr = malloc(5000 * (sizeof(char)));
+    int num = 5000;
+    int count = 0;
+    int jump = 0;
+    while ((c = getc(fp)) != EOF) {
+        if (jump != 418) {
             jump++;
             continue;
         }
-        if(c=='\n'){c='^';}
-        fullStr[count]=c;
+        if (c == '\n') { c = '^'; }
+        fullStr[count] = c;
         count++;
-        if(count==num){
-            num=num*2;
-            fullStr=realloc(fullStr,num*(sizeof(char)));
+        if (count == num) {
+            num = num * 2;
+            fullStr = realloc(fullStr, num * (sizeof(char)));
         }
     }
-    fullStr[count++]='^';
+    if (fullStr[count] == '^' && fullStr[count - 1] == '^') {
+        fullStr[count] = '\0';
+    }
     return fullStr;
 }
 
@@ -973,9 +974,6 @@ void *mergeFiles(void *in) {
 
 
 void *dirthread(void *in) {
-    pthread_mutex_lock(&p);
-    printf("%lu,", pthread_self());
-    pthread_mutex_unlock(&p);
     DIR *d;
     struct dirent *dir;
     struct input *input = in;
@@ -1136,7 +1134,6 @@ int main(int argc, char **argv) {
         perror("fail to establish a socket");
         exit(1);
     }
-    printf("Success to establish a socket...\n");
 
     servAddr.sin_family = AF_INET;
     servAddr.sin_port = htons(SERVER_PORT);
@@ -1147,7 +1144,6 @@ int main(int argc, char **argv) {
         perror("fail to connect the socket");
         exit(1);
     }
-    printf("Success to connect the socket...\n");
 
 //**************************************Send IP and column name(char *onetime = "1234567<duration~";)**********************
     char *IP = getIP();
@@ -1156,9 +1152,9 @@ int main(int argc, char **argv) {
     IPCol[0] = '\0';
     strcat(IPCol, IP);
     strcat(IPCol, "<");
-    sprintf(comInt,"%d",com);
-    strcat(IPCol,comInt);
-    strcat(IPCol,"~");
+    sprintf(comInt, "%d", com);
+    strcat(IPCol, comInt);
+    strcat(IPCol, "~");
 
     if (send(sockfd, IPCol, strlen(IPCol), 0) == -1) {
         perror("fail to send datas.");
@@ -1261,36 +1257,30 @@ int main(int argc, char **argv) {
     }
 
 
-
-
-
     size_t buf_idx = 0;
-    char buf[100000] ;
-
-    while (buf_idx < 100000 && 1 == read(sockfd, &buf[buf_idx], 1))
-    {
-        if('^' == buf[buf_idx] )
-            buf[buf_idx]='\n';
-        if (buf_idx > 0  && '@' == buf[buf_idx] )
-        {    buf[buf_idx]='\n';
-            break;
-        }
-        buf_idx++;
-    }
-
+    char buf[100000];
     FILE *output;
     char *outputFileName = malloc(sizeof(char) * 1000);
     outputFileName[0] = '\0';
-    strcpy(outputFileName,"AllFiles-sorted-<");
-    strcat(outputFileName,column);
-    strcat(outputFileName,">.csv");
+    strcpy(outputFileName, outputpath);
+    strcat(outputFileName, "/AllFiles-sorted-<");
+    strcat(outputFileName, column);
+    strcat(outputFileName, ">.csv");
     output = fopen(outputFileName, "wb");
-    fprintf(output,"%s",buf);
+
+    while (buf_idx < 2000 && 1 == read(sockfd, &buf[buf_idx], 1)) {
+        if ('^' == buf[buf_idx])
+            buf[buf_idx] = '\n';
+        if (buf_idx > 0 && '@' == buf[buf_idx]) {
+            buf[buf_idx] = '\n';
+            break;
+        }
+        fprintf(output, "%s", buf);
+        buf_idx++;
+    }
+
     fclose(output);
     free(outputFileName);
-
-
-    printf("%s\n", buf );
 
     close(sockfd);
     printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
