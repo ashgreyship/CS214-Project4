@@ -1258,7 +1258,7 @@ int main(int argc, char **argv) {
 
 
     size_t buf_idx = 0;
-    char buf[100000];
+    char buf[2000];
     FILE *output;
     char *outputFileName = malloc(sizeof(char) * 1000);
     outputFileName[0] = '\0';
@@ -1276,7 +1276,10 @@ int main(int argc, char **argv) {
             break;
         }
         fprintf(output, "%s", buf);
+        free(buf);
+
         buf_idx++;
+        memset( buf, '\0', sizeof(buf));
     }
 
     fclose(output);
