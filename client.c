@@ -1257,8 +1257,7 @@ int main(int argc, char **argv) {
     }
 
 
-    size_t buf_idx = 0;
-    char buf[2000];
+    char buf;
     FILE *output;
     char *outputFileName = malloc(sizeof(char) * 1000);
     outputFileName[0] = '\0';
@@ -1268,18 +1267,14 @@ int main(int argc, char **argv) {
     strcat(outputFileName, ">.csv");
     output = fopen(outputFileName, "wb");
 
-    while (buf_idx < 2000 && 1 == read(sockfd, &buf[buf_idx], 1)) {
-        if ('^' == buf[buf_idx])
-            buf[buf_idx] = '\n';
-        if (buf_idx > 0 && '@' == buf[buf_idx]) {
-            buf[buf_idx] = '\n';
+    while (1 == read(sockfd, &buf, 1)) {
+        if ('^' == buf)
+            buf = '\n';
+        if ('@' == buf) {
+            buf = '\n';
             break;
         }
         fprintf(output, "%s", buf);
-        free(buf);
-
-        buf_idx++;
-        memset( buf, '\0', sizeof(buf));
     }
 
     fclose(output);
