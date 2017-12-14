@@ -526,12 +526,13 @@ char *getIP() {
 
     getifaddrs(&ifap);
     for (ifa = ifap; ifa; ifa = ifa->ifa_next) {
-        if (ifa->ifa_addr->sa_family == AF_INET) {
-            // if (strcmp(ifa->ifa_name, "eth0") == 0) {
+        if (ifa->ifa_addr->sa_family == AF_INET ) {
+         if (strcmp((char *)ifa->ifa_name, "eth0") == 0) {
             sa = (struct sockaddr_in *) ifa->ifa_addr;
             addr = inet_ntoa(sa->sin_addr);
             //printf("Interface: %s\tAddress: %s\n", ifa->ifa_name, addr);
-            // }
+            break;
+         }
         }
     }
     freeifaddrs(ifap);
@@ -963,7 +964,6 @@ void *addFile(void *in) {
 
 void *mergeFiles(void *in) {
     char *mergeAllCommand = "@";
-    printf("starting merge all sorted Files");
     if (send(sockfd, mergeAllCommand, strlen(mergeAllCommand), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
@@ -994,6 +994,7 @@ void *dirthread(void *in) {
                 struct input *in = malloc(sizeof(struct input));
                 in->p = fp;
                 in->com = com;
+
 //Critical Section
                 pthread_mutex_lock(&key);
                 threads[countthreads] = malloc(sizeof(pthread_t));
@@ -1007,8 +1008,10 @@ void *dirthread(void *in) {
                 }
                 pthread_mutex_unlock(&key);
 //Critical Section Ends
-
             }
+
+
+
 //list directories
             struct stat st;
 
@@ -1042,7 +1045,6 @@ void *dirthread(void *in) {
                 }
                 pthread_mutex_unlock(&key);
 //Critical Section Ends
-
             }
         }
 
@@ -1111,7 +1113,7 @@ int main(int argc, char **argv) {
         column = argv[2];
         portnum = argv[6];
     }
-    printf("Port num is %s\n", portnum);
+
 //*****************************************Command Line Checking Complete{FINNALLY!!!}*****************************************
 //calculate sorting criteria
     int com;
@@ -1146,6 +1148,7 @@ int main(int argc, char **argv) {
     }
 
 //**************************************Send IP and column name(char *onetime = "1234567<duration~";)**********************
+
     char *IP = getIP();
     char *IPCol = malloc(100);
     char comInt[10];
@@ -1155,7 +1158,7 @@ int main(int argc, char **argv) {
     sprintf(comInt, "%d", com);
     strcat(IPCol, comInt);
     strcat(IPCol, "~");
-
+    
     if (send(sockfd, IPCol, strlen(IPCol), 0) == -1) {
         perror("fail to send datas.");
         exit(-1);
@@ -1267,28 +1270,45 @@ int main(int argc, char **argv) {
     strcat(outputFileName, ">.csv");
     output = fopen(outputFileName, "wb");
     int specialCount = 0;
-    while (1 == read(sockfd, &buf, 1)) {
-        if ('^' == buf)
-            buf = '\n';
-        if (specialCount == 0 && '@' == buf) {
-            specialCount++;
+    int specialsecond=0;
+    while (read(sockfd, &buf, 1)!=-1) {
+
+        if (specialsecond == 0 && '^' == buf) {
+            specialsecond++;
+            continue;
         }
-        if (specialCount == 1 && '@' == buf) {
+        if (specialsecond == 1 &&'^'!=buf) {
+            specialsecond=0;
+        }
+        if (specialsecond == 1 && '^' == buf) {
+            buf = '\n';
+        }
+
+
+
+        if (specialCount == 0 && '}' == buf) {
+            specialCount++;
+            continue;
+        }
+        if (specialCount == 1 &&'}'!=buf) {
+            specialCount=0;
+            continue;
+        }
+        if (specialCount == 1 && '}' == buf) {
             buf = '\n';
             break;
         }
-        if (specialCount == 1 &&'@'!=buf) {
-            specialCount=0;
-        }
-        fprintf(output, "%s", buf);
+   
+        fprintf(output, "%c",buf );
+        //printf("%c",buf );
     }
 
     fclose(output);
     free(outputFileName);
 
     close(sockfd);
-    printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
-    printf("%s\n", outputpath);
+  //  printf("\nTotal number of threads:%d\n", (numoftotalthreads + 1));
+  //  printf("%s\n", outputpath);
     return 0;
 }
 

@@ -1,0 +1,22 @@
+This project has the similarities as the prvious one. First we establish the socket on client and 
+server. Then the client will keep searhning the CSV file with the right format in the given directory. Once the client find a new CSV file or a new directory, it will create a new thread. Then the content of CSV file will be sent to the server. After reading all the bytes sent from the client, the server will sort it. After client sent all the CSV files, then it will also send a command to tell the server that it needs to merge all sorted CSV files. The server will send back the sorted CSV file which includes all the contents sent by the client. The client will open and write the string to a new file named AllFiles-sorted-<fieldname>.csv.
+
+
+
+After you complie server.c and client.c 
+gcc -pthread -Wall -Werror -fsanitize=address server.c -o server
+gcc -pthread -Wall -Werror -fsanitize=address client.c -o client
+
+./server -p portnum
+portnum is the port number which you want to use for connecting with the socket
+
+./client -c sortField -h host -p portnum -d inputDir -o outDir
+
+The parameter after -c is the filed which you want to sort
+The parameter after -h is the ip address of the server, if the server and client are running on
+the same machine, it can be localhost.
+The parameter after -p is the port number which you want to connect with the server
+The parameter after -d is the path of input directory.
+The parameter after -o is the path of output directory. This parameter is optional. The default 
+behavior will be to output the sorted file to the directory where the source code exists.
+

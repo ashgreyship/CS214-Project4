@@ -60,7 +60,7 @@ The server will open a port and wait for connection requests. On connection, it 
 The server will run until stopped by a SIGKILL (i.e. kill <pid of server>).
  
 To STDOUT, output a list of the ip addresses of all the clients that have connected: (?-> when?)
-Received connections from: <ipaddress>,<ipaddress>,<ipaddress>,…
+Received connections from: \<ipaddress\>,\<ipaddress\>,\<ipaddress\>,…
  
  
 ### c. Structure
