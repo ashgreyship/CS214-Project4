@@ -1266,13 +1266,19 @@ int main(int argc, char **argv) {
     strcat(outputFileName, column);
     strcat(outputFileName, ">.csv");
     output = fopen(outputFileName, "wb");
-
+    int specialCount = 0;
     while (1 == read(sockfd, &buf, 1)) {
         if ('^' == buf)
             buf = '\n';
-        if ('@' == buf) {
+        if (specialCount == 0 && '@' == buf) {
+            specialCount++;
+        }
+        if (specialCount == 1 && '@' == buf) {
             buf = '\n';
             break;
+        }
+        if (specialCount == 1 &&'@'!=buf) {
+            specialCount=0;
         }
         fprintf(output, "%s", buf);
     }
