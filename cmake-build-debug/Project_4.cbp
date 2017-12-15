@@ -82,27 +82,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/README.md">
-			<Option target="Project_4"/>
-		</Unit>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/client.c">
-			<Option target="Project_4"/>
-		</Unit>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/client.h">
-			<Option target="Project_4"/>
-		</Unit>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/createlinkedlist.c">
-			<Option target="Project_4"/>
-		</Unit>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/server.c">
-			<Option target="Project_4"/>
-		</Unit>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/sorter.c">
-			<Option target="Project_4"/>
-		</Unit>
-		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/sorter.h">
-			<Option target="Project_4"/>
-		</Unit>
 		<Unit filename="/Users/gabriel/Onedrive/Education/RU/5th semester/Systems Programming/Project 4/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
